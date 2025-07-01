@@ -17,7 +17,7 @@ const App = () => {
         photoUrl="../img/main.png"
       />
       
-      <Schedule date="2026-10-14" time="오전 11시" place="포항 웨딩홀" />
+      <Schedule date="2026-10-14" time="AM 11:00" place="마리드메이 (구.오월의 신부)" />
       
       <KakaoMap
         latitude={35.233821}
@@ -31,7 +31,7 @@ const App = () => {
         '../img/main.png'
       ]} />
 
-      <Contact phone="010-1234-5678" bankAccount="국민은행 123-456-7890-00" />
+      <Contact phone="010-9327-9348" bankAccount="IBK기업은행 693-009040-01-012" />
     </div>
   );
 };

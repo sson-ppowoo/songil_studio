@@ -1,42 +1,56 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-const KakaoMap = ({ latitude, longitude }) => {
+const KakaoMap = () => {
   const mapRef = useRef(null);
   const hasMounted = useRef(false);
 
-  const placeName = '포항 웨딩홀';
-  const address = '경상북도 포항시 북구 삼호로 123';
+  const placeName = '마리드메이(구.오월의 신부)';
+  const address = '대구광역시 수성구 황금동 동대구로 157';
+
+  const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null });
 
   useEffect(() => {
     if (hasMounted.current) return;
     hasMounted.current = true;
 
-    const loadKakaoMap = () => {
-      const container = mapRef.current;
-      const options = {
-        center: new window.kakao.maps.LatLng(latitude, longitude),
-        level: 3,
-      };
-      const map = new window.kakao.maps.Map(container, options);
-      new window.kakao.maps.Marker({
-        position: new window.kakao.maps.LatLng(latitude, longitude),
-        map: map,
+    const loadMapScript = () => {
+      const script = document.createElement('script');
+      script.src = '//dapi.kakao.com/v2/maps/sdk.js?appkey=80d2acf957e190eb93c93e1942a0d92d&autoload=false&libraries=services';
+      script.async = true;
+      script.onload = () => window.kakao.maps.load(initializeMap);
+      document.head.appendChild(script);
+    };
+
+    const initializeMap = () => {
+      const geocoder = new window.kakao.maps.services.Geocoder();
+      geocoder.addressSearch(address, (result, status) => {
+        if (status === window.kakao.maps.services.Status.OK) {
+          const lat = parseFloat(result[0].y);
+          const lng = parseFloat(result[0].x);
+          setCoordinates({ latitude: lat, longitude: lng });
+
+          const container = mapRef.current;
+          const options = {
+            center: new window.kakao.maps.LatLng(lat, lng),
+            level: 3,
+          };
+          const map = new window.kakao.maps.Map(container, options);
+          new window.kakao.maps.Marker({
+            position: new window.kakao.maps.LatLng(lat, lng),
+            map: map,
+          });
+        } else {
+          alert('주소를 찾을 수 없습니다.');
+        }
       });
     };
 
     if (!window.kakao || !window.kakao.maps) {
-      const script = document.createElement('script');
-      script.src = '//dapi.kakao.com/v2/maps/sdk.js?appkey=80d2acf957e190eb93c93e1942a0d92d&autoload=false';
-      script.async = true;
-      document.head.appendChild(script);
-
-      script.onload = () => {
-        window.kakao.maps.load(loadKakaoMap);
-      };
+      loadMapScript();
     } else {
-      window.kakao.maps.load(loadKakaoMap);
+      window.kakao.maps.load(initializeMap);
     }
-  }, [latitude, longitude]);
+  }, []);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(address).then(() => {
@@ -44,7 +58,18 @@ const KakaoMap = ({ latitude, longitude }) => {
     });
   };
 
-  const mapLink = `https://map.kakao.com/link/to/${placeName},${latitude},${longitude}`;
+  // 👉 앱, 웹 길찾기 링크 생성
+  const getMapLinks = () => {
+    const { latitude, longitude } = coordinates;
+    if (!latitude || !longitude) return { app: '#', web: '#' };
+
+    return {
+      app: `kakaomap://route?ep=${latitude},${longitude}&by=FOOT`,
+      web: `https://map.kakao.com/link/to/${placeName},${latitude},${longitude}`,
+    };
+  };
+
+  const { app: appLink, web: webLink } = getMapLinks();
 
   return (
     <div style={{ marginTop: '2rem', padding: '0 16px' }}>
@@ -54,7 +79,17 @@ const KakaoMap = ({ latitude, longitude }) => {
         <p style={{ fontSize: '14px', color: '#555' }}>{address}</p>
         <div style={{ marginTop: '8px', display: 'flex', gap: '16px', alignItems: 'center' }}>
           <button onClick={handleCopy} style={{ padding: '4px 6px' }}>주소 복사</button>
-          <a href={mapLink} target="_blank" rel="noopener noreferrer" style={{color: '#000', textDecoration: 'none'}}>
+
+          {/* 앱 우선 길찾기 → 앱 없으면 웹 fallback */}
+          <a
+            href={appLink}
+            onClick={(e) => {
+              setTimeout(() => {
+                window.location.href = webLink;
+              }, 500); // 앱 없을 경우 fallback (0.5초 후)
+            }}
+            style={{ color: '#000', textDecoration: 'none' }}
+          >
             길찾기
           </a>
         </div>
