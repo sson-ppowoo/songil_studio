@@ -8,16 +8,18 @@ import './App.css';
 
 const App = () => {
   return (
-    <div style={{ maxWidth: '480px', margin: '30px auto', fontFamily: 'Pretendard, sans-serif' }}>
+    <div style={{ maxWidth: '480px', margin: '20px auto', fontFamily: 'Pretendard, sans-serif', padding: '0 20px', border: '1px solid #ddd', 
+      borderRadius: '8px', boxShadow: '0 10px 10px rgba(229, 255, 0, 0.1)'      
+     }}>
       <MainScreen
-        bride="금명"
-        groom="충섭"
+        bride="범수"
+        groom="현진"
         message1="당신 덕에 인생이 만날 봄입니다."
         message2={`봄바람 살랑이는 계절,\n저희 두 사람이 새로운 출발을 합니다.\n사랑과 축복 속에 함께해 주세요.`}
         photoUrl="../img/main.png"
       />
       
-      <Schedule date="2026-10-14" time="AM 11:00" place="마리드메이 (구.오월의 신부)" />
+      <Schedule date="2026-11-19" time="AM 11:00" place="마리드메이 (구.오월의 신부)" />
       
       <KakaoMap
         latitude={35.233821}
