@@ -1,0 +1,39 @@
+.invitation {
+  text-align: center;
+  margin: 20px;
+  color: #333;
+  font-family: "Gowun Batang", serif;
+}
+.invitation_day {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  margin-bottom: 32px;
+}
+.invitation_text {
+  margin: auto;
+}
+.invitation_text h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 30px auto;
+}
+/* .invitation_text p{   
+    
+}   */
+.Customer_info{
+    margin-bottom: 32px;
+}
+.Groom_info, .Bride_info {
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+    gap: 16px;        
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+.Wedding_info{    
+    margin-bottom: 40px auto;
+    background-image: /img/;
+
+}

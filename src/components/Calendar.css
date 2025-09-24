@@ -1,0 +1,55 @@
+.calendar-container {
+  display: inline-block;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.calendar-header {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 40px);
+  grid-gap: 5px;
+  justify-content: center;
+}
+
+.day-label {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #666;
+}
+
+.empty {
+  visibility: hidden;
+}
+
+.day {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #333;
+  position: relative;
+}
+
+.day.special {
+  background: linear-gradient(145deg, #d0b134, #fff0ca); /* 금빛 그라데이션 */
+  color: #fff; /* 글자 하얗게 */
+  border-radius: 50%; /* 완전 원형 */
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2); /* 살짝 입체감 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
