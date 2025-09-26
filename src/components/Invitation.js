@@ -49,12 +49,22 @@ function Invitation() {
           <h2>invitation</h2>
           <h2>11/16</h2>
         </div>
-        <Calendar
-          year={2025}
-          month={11}
-          specialDay={16}
-          highlightColor="#d0b134"
-        />
+        <div
+          className="calendar-wrapper"
+          style={{
+            backgroundImage: "url(/img/calendar_bg.png)",
+            backgroundSize: "cover", // 크기 꽉 차게
+            backgroundPosition: "center", // 중앙 정렬
+            backgroundRepeat: "no-repeat", // 반복 없음
+          }}
+        >
+          <Calendar
+            year={2025}
+            month={11}
+            specialDay={16}
+            highlightColor="#d0b134"
+          />
+        </div>
       </div>
     </section>
   );
